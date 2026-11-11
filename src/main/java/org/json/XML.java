@@ -510,7 +510,11 @@ public class XML {
         char initial = string.charAt(0);
         if ((initial >= '0' && initial <= '9') || initial == '-') {
             try {
-                return stringToNumber(string);
+                // numbers longer than 1000 chars are kept as a string,
+                // same limit as JSONObject#stringToValue(String)
+                if (string.length() <= 1000) {
+                    return stringToNumber(string);
+                }
             } catch (Exception ignore) {
             }
         }
